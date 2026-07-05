@@ -78,4 +78,5 @@ Empfohlene Reihenfolge fuer den weiteren Ausbau:
 - Privacy Mode maskiert IP/MAC/Hostname/Prozessnamen in Netzwerklisten.
 - Diagnostics-Checks melden BPF-/Tool-/LaunchDaemon-/Settings-Zustand plausibel.
 - Network-Report laesst sich als JSON oder Markdown exportieren und respektiert Privacy Mode.
+- City View rendert die 3D-Stadt, Kamera-Presets wechseln sichtbar, Visual Modes faerben Gebaeude/Traffic um und Gebaeudeauswahl fokussiert die Kamera.
 - Menu-Bar-Extra laesst sich ein- und ausblenden.

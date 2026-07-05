@@ -46,6 +46,7 @@
 		037 /* TrafficFlowGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138 /* TrafficFlowGraphView.swift */; };
 		038 /* SystemCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139 /* SystemCityView.swift */; };
 		039 /* StorageFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140 /* StorageFlowView.swift */; };
+		069 /* CitySceneConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170 /* CitySceneConfiguration.swift */; };
 		040 /* world-map.svg in Resources */ = {isa = PBXBuildFile; fileRef = 141 /* world-map.svg */; };
 		041 /* PageChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142 /* PageChrome.swift */; };
 		042 /* BPFPermissionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143 /* BPFPermissionHelper.swift */; };
@@ -158,6 +159,7 @@
 		167 /* IPAddressClassifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddressClassifierTests.swift; sourceTree = "<group>"; };
 		168 /* AppWindowID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindowID.swift; sourceTree = "<group>"; };
 		169 /* LaunchAtLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginManager.swift; sourceTree = "<group>"; };
+		170 /* CitySceneConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySceneConfiguration.swift; sourceTree = "<group>"; };
 		200 /* MacPulse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacPulse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		201 /* MacPulseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacPulseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -347,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				139 /* SystemCityView.swift */,
+				170 /* CitySceneConfiguration.swift */,
 			);
 			path = City;
 			sourceTree = "<group>";
@@ -516,6 +519,7 @@
 				036 /* TrafficFlowService.swift in Sources */,
 				037 /* TrafficFlowGraphView.swift in Sources */,
 				038 /* SystemCityView.swift in Sources */,
+				069 /* CitySceneConfiguration.swift in Sources */,
 				039 /* StorageFlowView.swift in Sources */,
 				042 /* BPFPermissionHelper.swift in Sources */,
 				043 /* BPFPermissionBanner.swift in Sources */,

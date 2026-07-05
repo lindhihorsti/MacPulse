@@ -45,7 +45,7 @@ Status: begonnen
 
 - `NetworkView.swift` in kleinere Views und Services aufteilen.
 - `ProcessListView.swift` in Liste, Detail, Panels und Flow-Visualisierung splitten.
-- `SystemCityView.swift` modularisieren.
+- `SystemCityView.swift` modularisieren. Begonnen: Visual-Mode- und Kamera-Konfiguration in `CitySceneConfiguration.swift` extrahiert.
 - `StorageFlowView.swift` Datenservice und UI staerker trennen.
 - Empty, Loading und Error States vereinheitlichen.
 - Accessibility-Pass fuer Labels, Kontraste und Tastatursteuerung.
@@ -78,5 +78,6 @@ Status: begonnen
 | Privacy Mode | Begonnen | Export/Copy/Details konsequent redigieren |
 | Reports | Teilweise fertig | UI-Exportflow fuer JSON/Markdown vorhanden; Flow-/Prozessdaten spaeter direkt anbinden |
 | Diagnostics | Begonnen | Check-Texte schaerfen und explizite Actions ergaenzen |
+| City View | Teilweise fertig | 3D-Stadtbasis, Visual Modes, Kamera-Presets, Strassen, Network Harbor und Traffic vorhanden; weiterer Schritt: Scene Builder/Layout Engine aus `SystemCityView.swift` extrahieren |
 | Netzwerk-Intelligenz | Begonnen | Korrelationsdaten in Network-/Process-UI anzeigen |
 | Distribution | Fehlt | Signing, Notarization, DMG |

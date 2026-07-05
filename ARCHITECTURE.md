@@ -43,6 +43,7 @@ MacPulse ist eine SwiftUI-App mit lokalem Monitoring. Die App liest Systemdaten 
 - `Views/Network/NetworkView.swift`
 - `Views/Shared/ProcessListView.swift`
 - `Views/City/SystemCityView.swift`
+- `Views/City/CitySceneConfiguration.swift`
 - `Views/Storage/StorageFlowView.swift`
 
 ## Datenfluss
@@ -53,6 +54,17 @@ MacPulse ist eine SwiftUI-App mit lokalem Monitoring. Die App liest Systemdaten 
 4. SwiftUI rendert die abhaengigen Views neu.
 
 Der Hauptmonitor wird in `MacPulseApp` als `@State` gehalten und per Environment in die App gegeben. Andere Views erzeugen aktuell eigene Services lokal.
+
+## City View
+
+Der City View nutzt SceneKit innerhalb eines `NSViewRepresentable`. Prozesse werden als Gebaeude in semantischen Bezirken dargestellt:
+
+- `System Core`, `App Downtown`, `Network Harbor`, `Builder Quarter`, `Service Belt` und `Outer Edge`
+- CPU beeinflusst Gebaeudehoehe und Thermal-/Risk-Emission.
+- Memory beeinflusst Gebaeudegrundflaeche und Memory-Mode-Hervorhebung.
+- Netzwerkbezogene Prozesse werden im `Network Harbor` mit Wasserflaeche, Piers und staerkerem Traffic-Licht visualisiert.
+- Hauptstrassen, Lane-Marker, bewegte Traffic-Lichter, District-Flows und Hotspot-Beacons bilden die Stadtmetapher.
+- Kamera-Presets und Visual Modes liegen in `CitySceneConfiguration.swift`, waehrend Scene-Aufbau und Hit-Testing weiter in `SystemCityView.swift` liegen.
 
 ## Externe Systemquellen
 

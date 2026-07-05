@@ -45,7 +45,8 @@ MacPulse.xcodeproj/
 - Packet Capture ueber libpcap mit BPF-Filter und Exportpfad
 - Portscanner auf Basis von `NWConnection`
 - Menu-Bar-Extra mit kompakten Metriken
-- Storage-, Memory-, Activity- und 3D-City-Visualisierungen
+- Storage-, Memory-, Activity- und erweiterte 3D-City-Visualisierungen
+- City View mit SceneKit-Stadtmodell: Bezirksstrassen, Network Harbor, bewegte Traffic-Lichter, Kamera-Presets und Visual Modes fuer Live, Thermal, Memory, Network und Risk
 - Privacy Mode mit zentraler Redaction-Logik fuer sichtbare Netzwerkdaten
 - Diagnostics-Bereich fuer BPF-, Systemtool-, LaunchDaemon- und Settings-Checks
 - Metadata-only Reports als JSON oder Markdown mit Privacy-Redaction

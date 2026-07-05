@@ -10,6 +10,8 @@ struct SystemCityView: View {
     @State private var showDataLines = true
     @State private var showFlowLabels = true
     @State private var showAtmosphere = true
+    @State private var visualMode: CityVisualMode = .live
+    @State private var cameraPreset: CityCameraPreset = .skyline
 
     private let cityRetentionInterval: TimeInterval = 45
 
@@ -108,7 +110,9 @@ struct SystemCityView: View {
                         districtScale: districtScale,
                         showDataLines: showDataLines,
                         showFlowLabels: showFlowLabels,
-                        showAtmosphere: showAtmosphere
+                        showAtmosphere: showAtmosphere,
+                        visualMode: visualMode,
+                        cameraPreset: cameraPreset
                     ) { pid in
                         guard let pid else {
                             selectedProcess = nil
@@ -190,6 +194,22 @@ struct SystemCityView: View {
                         }
                     }
 
+                    cityControlGroup("Mode") {
+                        HStack(spacing: 6) {
+                            ForEach(CityVisualMode.allCases) { mode in
+                                visualModeButton(mode)
+                            }
+                        }
+                    }
+
+                    cityControlGroup("Camera") {
+                        HStack(spacing: 6) {
+                            ForEach(CityCameraPreset.allCases) { preset in
+                                cameraPresetButton(preset)
+                            }
+                        }
+                    }
+
                     cityControlGroup("Density") {
                         HStack(spacing: 10) {
                             Image(systemName: "slider.horizontal.3")
@@ -260,6 +280,42 @@ struct SystemCityView: View {
                 .padding(.vertical, 8)
                 .background(currentPreset == preset ? Color.netColor.opacity(0.82) : Color.backgroundTertiary)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func visualModeButton(_ mode: CityVisualMode) -> some View {
+        Button {
+            visualMode = mode
+        } label: {
+            HStack(spacing: 6) {
+                Image(systemName: mode.icon)
+                    .font(.system(size: 11, weight: .semibold))
+                Text(mode.rawValue)
+                    .lineLimit(1)
+                    .fixedSize()
+            }
+            .font(.system(size: 11, weight: .semibold))
+            .foregroundStyle(visualMode == mode ? Color.white : Color.textSecondary)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            .background(visualMode == mode ? mode.accentColor.opacity(0.84) : Color.backgroundTertiary)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func cameraPresetButton(_ preset: CityCameraPreset) -> some View {
+        Button {
+            cameraPreset = preset
+        } label: {
+            Image(systemName: preset.icon)
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundStyle(cameraPreset == preset ? Color.white : Color.textSecondary)
+                .frame(width: 32, height: 30)
+                .background(cameraPreset == preset ? Color.appAccent.opacity(0.84) : Color.backgroundTertiary)
+                .clipShape(RoundedRectangle(cornerRadius: 9))
+                .help(preset.rawValue)
         }
         .buttonStyle(.plain)
     }
@@ -433,6 +489,8 @@ private struct SystemCitySceneView: NSViewRepresentable {
     let showDataLines: Bool
     let showFlowLabels: Bool
     let showAtmosphere: Bool
+    let visualMode: CityVisualMode
+    let cameraPreset: CityCameraPreset
     let onSelect: (Int32?) -> Void
 
     private struct DistrictFootprint {
@@ -518,11 +576,12 @@ private struct SystemCitySceneView: NSViewRepresentable {
         let cameraNode = SCNNode()
         cameraNode.name = "cityCamera"
         cameraNode.camera = SCNCamera()
-        cameraNode.camera?.fieldOfView = 48
+        cameraNode.camera?.fieldOfView = cameraFieldOfView
         cameraNode.camera?.zNear = 1
         cameraNode.camera?.zFar = 2000
-        cameraNode.position = SCNVector3(0, 170, 265)
-        cameraNode.eulerAngles = SCNVector3(-0.48, 0, 0)
+        let cameraPose = makeCameraPose(for: cityLayout)
+        cameraNode.position = cameraPose.position
+        cameraNode.eulerAngles = cameraPose.eulerAngles
         scene.rootNode.addChildNode(cameraNode)
 
         if let preservedPointOfView {
@@ -532,13 +591,13 @@ private struct SystemCitySceneView: NSViewRepresentable {
         let ambientLight = SCNNode()
         ambientLight.light = SCNLight()
         ambientLight.light?.type = .ambient
-        ambientLight.light?.color = NSColor(calibratedWhite: 0.62, alpha: 1.0)
+        ambientLight.light?.color = ambientLightColor
         scene.rootNode.addChildNode(ambientLight)
 
         let sunLight = SCNNode()
         sunLight.light = SCNLight()
         sunLight.light?.type = .omni
-        sunLight.light?.intensity = 2600
+        sunLight.light?.intensity = keyLightIntensity
         sunLight.position = SCNVector3(40, 260, 150)
         scene.rootNode.addChildNode(sunLight)
 
@@ -565,6 +624,7 @@ private struct SystemCitySceneView: NSViewRepresentable {
 
         addReferenceMonolith(in: scene)
         addGroundGrid(in: scene, width: cityLayout.floorWidth, depth: cityLayout.floorDepth)
+        addCityArteries(layout: cityLayout, in: scene)
 
         for snapshot in districts {
             let center = cityLayout.positions[snapshot.district] ?? SIMD2<Float>(0, 0)
@@ -572,13 +632,59 @@ private struct SystemCitySceneView: NSViewRepresentable {
             addDistrictBase(for: snapshot, footprint: footprint, at: center, in: scene)
             addBuildings(for: snapshot, footprint: footprint, center: center, in: scene)
             addDistrictLabel(for: snapshot, footprint: footprint, at: center, in: scene)
+            if snapshot.district == .networkSync {
+                addNetworkHarbor(for: snapshot, footprint: footprint, at: center, in: scene)
+            }
         }
 
         if showDataLines {
             addDataLines(flows: makeDistrictFlows(), layout: cityLayout, in: scene)
         }
 
+        if showAtmosphere {
+            addStreetTraffic(layout: cityLayout, in: scene)
+        }
+
         return scene
+    }
+
+    private var cameraFieldOfView: CGFloat {
+        switch cameraPreset {
+        case .skyline: return 45
+        case .orbit: return 50
+        case .street: return 58
+        }
+    }
+
+    private var ambientLightColor: NSColor {
+        switch visualMode {
+        case .live: return NSColor(calibratedWhite: 0.62, alpha: 1.0)
+        case .thermal: return NSColor(calibratedRed: 0.72, green: 0.50, blue: 0.38, alpha: 1.0)
+        case .memory: return NSColor(calibratedRed: 0.48, green: 0.58, blue: 0.80, alpha: 1.0)
+        case .network: return NSColor(calibratedRed: 0.38, green: 0.70, blue: 0.68, alpha: 1.0)
+        case .risk: return NSColor(calibratedRed: 0.68, green: 0.42, blue: 0.42, alpha: 1.0)
+        }
+    }
+
+    private var keyLightIntensity: CGFloat {
+        switch visualMode {
+        case .live: return 2600
+        case .thermal: return 3100
+        case .memory: return 2750
+        case .network: return 2900
+        case .risk: return 3300
+        }
+    }
+
+    private func makeCameraPose(for layout: CityLayout) -> (position: SCNVector3, eulerAngles: SCNVector3) {
+        switch cameraPreset {
+        case .skyline:
+            return (SCNVector3(-80, 150, 250), SCNVector3(-0.50, -0.18, 0))
+        case .orbit:
+            return (SCNVector3(0, 188, 270), SCNVector3(-0.56, 0, 0))
+        case .street:
+            return (SCNVector3(-layout.floorWidth * 0.34, 38, layout.floorDepth * 0.42), SCNVector3(-0.18, -0.55, 0))
+        }
     }
 
     private func addReferenceMonolith(in scene: SCNScene) {
@@ -608,6 +714,154 @@ private struct SystemCitySceneView: NSViewRepresentable {
             let verticalNode = SCNNode(geometry: vertical)
             verticalNode.position = SCNVector3(Float(offset), 0.05, 0)
             scene.rootNode.addChildNode(verticalNode)
+        }
+    }
+
+    private func addCityArteries(layout: CityLayout, in scene: SCNScene) {
+        let roadY = Self.citySurfaceY + Self.districtBaseHeight + 0.08
+        let roadMaterial = SCNMaterial()
+        roadMaterial.diffuse.contents = cityRoadColor
+        roadMaterial.emission.contents = cityRoadEmission
+        roadMaterial.roughness.contents = 0.9
+
+        let orderedDistricts: [ProcessCityDistrict] = [.systemCore, .userApps, .networkSync, .developerTools, .backgroundAgents, .other]
+        let centers = orderedDistricts.compactMap { district -> SIMD2<Float>? in
+            layout.positions[district]
+        }
+        guard centers.count > 1 else { return }
+
+        let rows = [Array(centers.prefix(3)), Array(centers.suffix(3))]
+        for row in rows where row.count > 1 {
+            let start = row[0]
+            let end = row[row.count - 1]
+            let road = SCNBox(width: CGFloat(abs(end.x - start.x) + 48), height: 0.34, length: 7.2, chamferRadius: 1.6)
+            road.materials = [roadMaterial]
+            let node = SCNNode(geometry: road)
+            node.position = SCNVector3((start.x + end.x) / 2, roadY, start.y)
+            scene.rootNode.addChildNode(node)
+
+            addLaneMarkers(from: SIMD2(start.x - 24, start.y), to: SIMD2(end.x + 24, end.y), in: scene)
+        }
+
+        for column in 0..<3 where centers.count >= 6 {
+            let start = centers[column]
+            let end = centers[column + 3]
+            let road = SCNBox(width: 7.2, height: 0.34, length: CGFloat(abs(end.y - start.y) + 42), chamferRadius: 1.6)
+            road.materials = [roadMaterial]
+            let node = SCNNode(geometry: road)
+            node.position = SCNVector3(start.x, roadY, (start.y + end.y) / 2)
+            scene.rootNode.addChildNode(node)
+
+            addLaneMarkers(from: SIMD2(start.x, start.y - 20), to: SIMD2(end.x, end.y + 20), in: scene)
+        }
+
+        let plaza = SCNCylinder(radius: 13, height: 0.42)
+        plaza.radialSegmentCount = 48
+        plaza.firstMaterial?.diffuse.contents = cityRoadColor.blended(withFraction: 0.18, of: .white) ?? cityRoadColor
+        plaza.firstMaterial?.emission.contents = cityRoadEmission
+        let plazaNode = SCNNode(geometry: plaza)
+        plazaNode.position = SCNVector3(0, roadY + 0.04, 0)
+        scene.rootNode.addChildNode(plazaNode)
+    }
+
+    private var cityRoadColor: NSColor {
+        switch visualMode {
+        case .thermal: return NSColor(calibratedRed: 0.20, green: 0.12, blue: 0.10, alpha: 1.0)
+        case .memory: return NSColor(calibratedRed: 0.10, green: 0.13, blue: 0.22, alpha: 1.0)
+        case .network: return NSColor(calibratedRed: 0.07, green: 0.18, blue: 0.17, alpha: 1.0)
+        case .risk: return NSColor(calibratedRed: 0.19, green: 0.09, blue: 0.10, alpha: 1.0)
+        case .live: return NSColor(calibratedRed: 0.09, green: 0.12, blue: 0.15, alpha: 1.0)
+        }
+    }
+
+    private var cityRoadEmission: NSColor {
+        switch visualMode {
+        case .thermal: return NSColor(calibratedRed: 0.44, green: 0.15, blue: 0.06, alpha: 0.08)
+        case .memory: return NSColor(calibratedRed: 0.18, green: 0.32, blue: 0.85, alpha: 0.07)
+        case .network: return NSColor(calibratedRed: 0.10, green: 0.70, blue: 0.62, alpha: 0.10)
+        case .risk: return NSColor(calibratedRed: 0.85, green: 0.12, blue: 0.16, alpha: 0.09)
+        case .live: return NSColor(calibratedRed: 0.12, green: 0.34, blue: 0.58, alpha: 0.05)
+        }
+    }
+
+    private func addLaneMarkers(from start: SIMD2<Float>, to end: SIMD2<Float>, in scene: SCNScene) {
+        let delta = end - start
+        let distance = simd_length(delta)
+        guard distance > 8 else { return }
+
+        let direction = simd_normalize(delta)
+        let markerCount = min(max(Int(distance / 14), 3), 24)
+        let markerColor = NSColor.white.withAlphaComponent(visualMode == .network ? 0.22 : 0.13)
+
+        for index in 0..<markerCount {
+            let t = Float(index + 1) / Float(markerCount + 1)
+            let position = start + delta * t
+            let marker = SCNBox(width: 4.2, height: 0.08, length: 0.42, chamferRadius: 0.04)
+            marker.firstMaterial?.diffuse.contents = markerColor
+            marker.firstMaterial?.emission.contents = markerColor
+            let markerNode = SCNNode(geometry: marker)
+            markerNode.position = SCNVector3(position.x, Self.citySurfaceY + Self.districtBaseHeight + 0.34, position.y)
+            markerNode.eulerAngles.y = CGFloat(atan2(direction.x, direction.y))
+            scene.rootNode.addChildNode(markerNode)
+        }
+    }
+
+    private func addNetworkHarbor(for snapshot: CityDistrictSnapshot, footprint: DistrictFootprint, at center: SIMD2<Float>, in scene: SCNScene) {
+        let water = SCNBox(width: CGFloat(footprint.width * 0.88), height: 0.18, length: CGFloat(max(footprint.depth * 0.24, 18)), chamferRadius: 2.4)
+        let waterMaterial = SCNMaterial()
+        waterMaterial.diffuse.contents = NSColor(calibratedRed: 0.02, green: 0.26, blue: 0.30, alpha: 0.86)
+        waterMaterial.emission.contents = NSColor(calibratedRed: 0.02, green: 0.62, blue: 0.68, alpha: visualMode == .network ? 0.22 : 0.09)
+        waterMaterial.metalness.contents = 0.18
+        waterMaterial.roughness.contents = 0.18
+        water.materials = [waterMaterial]
+        let waterNode = SCNNode(geometry: water)
+        waterNode.position = SCNVector3(center.x, Self.citySurfaceY + Self.districtBaseHeight + 0.48, center.y + footprint.depth * 0.39)
+        scene.rootNode.addChildNode(waterNode)
+
+        let pierMaterial = SCNMaterial()
+        pierMaterial.diffuse.contents = snapshot.district.sceneColor.blended(withFraction: 0.62, of: .black) ?? snapshot.district.sceneColor
+        pierMaterial.emission.contents = snapshot.district.sceneColor.withAlphaComponent(0.08)
+
+        for offset in [-0.28, 0.0, 0.28] {
+            let pier = SCNBox(width: 4.0, height: 0.7, length: CGFloat(footprint.depth * 0.28), chamferRadius: 0.4)
+            pier.materials = [pierMaterial]
+            let node = SCNNode(geometry: pier)
+            node.position = SCNVector3(center.x + footprint.width * Float(offset), Self.citySurfaceY + Self.districtBaseHeight + 0.9, center.y + footprint.depth * 0.31)
+            scene.rootNode.addChildNode(node)
+        }
+    }
+
+    private func addStreetTraffic(layout: CityLayout, in scene: SCNScene) {
+        let route: [ProcessCityDistrict] = [.systemCore, .userApps, .networkSync, .other, .backgroundAgents, .developerTools, .systemCore]
+        let points = route.compactMap { layout.positions[$0] }
+        guard points.count > 2 else { return }
+
+        let color: NSColor
+        switch visualMode {
+        case .thermal: color = NSColor(calibratedRed: 1.0, green: 0.46, blue: 0.18, alpha: 1.0)
+        case .memory: color = NSColor(calibratedRed: 0.50, green: 0.74, blue: 1.0, alpha: 1.0)
+        case .network: color = NSColor(calibratedRed: 0.40, green: 1.0, blue: 0.88, alpha: 1.0)
+        case .risk: color = NSColor(calibratedRed: 1.0, green: 0.26, blue: 0.28, alpha: 1.0)
+        case .live: color = NSColor(calibratedRed: 0.68, green: 0.88, blue: 1.0, alpha: 1.0)
+        }
+
+        let vehicleCount = visualMode == .network ? 14 : 9
+        for index in 0..<vehicleCount {
+            let vehicle = SCNSphere(radius: 0.72)
+            vehicle.firstMaterial?.diffuse.contents = NSColor.white
+            vehicle.firstMaterial?.emission.contents = color
+            let node = SCNNode(geometry: vehicle)
+            node.position = SCNVector3(points[0].x, Self.citySurfaceY + Self.districtBaseHeight + 1.6, points[0].y)
+            scene.rootNode.addChildNode(node)
+
+            var actions: [SCNAction] = [.wait(duration: Double(index) * 0.22)]
+            for point in points.dropFirst() {
+                actions.append(.move(to: SCNVector3(point.x, Self.citySurfaceY + Self.districtBaseHeight + 1.6, point.y), duration: visualMode == .network ? 1.25 : 1.85))
+            }
+            actions.append(.run { node in
+                node.position = SCNVector3(points[0].x, Self.citySurfaceY + Self.districtBaseHeight + 1.6, points[0].y)
+            })
+            node.runAction(.repeatForever(.sequence(actions)))
         }
     }
 
@@ -699,7 +953,9 @@ private struct SystemCitySceneView: NSViewRepresentable {
                 height: height,
                 styleSeed: index,
                 isActive: process.status == .running,
-                hotspotLevel: max(cpuRatio, memoryRatio)
+                hotspotLevel: max(cpuRatio, memoryRatio),
+                cpuRatio: cpuRatio,
+                memoryRatio: memoryRatio
             )
             node.position = SCNVector3(
                 startX + Float(column) * spacing,
@@ -738,7 +994,9 @@ private struct SystemCitySceneView: NSViewRepresentable {
         height: Float,
         styleSeed: Int,
         isActive: Bool,
-        hotspotLevel: Float
+        hotspotLevel: Float,
+        cpuRatio: Float,
+        memoryRatio: Float
     ) -> SCNNode {
         let wrapper = SCNNode()
         wrapper.name = "building-\(processID)"
@@ -753,19 +1011,19 @@ private struct SystemCitySceneView: NSViewRepresentable {
         baseMaterial.diffuse.contents = darkFacade
         baseMaterial.metalness.contents = 0.08
         baseMaterial.roughness.contents = 0.88
-        baseMaterial.emission.contents = isActive ? lighting.facadeGlowActive : lighting.facadeGlowIdle
+        baseMaterial.emission.contents = modeEmission(base: isActive ? lighting.facadeGlowActive : lighting.facadeGlowIdle, district: district, cpuRatio: cpuRatio, memoryRatio: memoryRatio, districtColor: districtColor)
 
         let accentMaterial = SCNMaterial()
         accentMaterial.diffuse.contents = midFacade
         accentMaterial.metalness.contents = 0.06
         accentMaterial.roughness.contents = 0.78
-        accentMaterial.emission.contents = isActive ? lighting.accentGlowActive : lighting.accentGlowIdle
+        accentMaterial.emission.contents = modeEmission(base: isActive ? lighting.accentGlowActive : lighting.accentGlowIdle, district: district, cpuRatio: cpuRatio, memoryRatio: memoryRatio, districtColor: districtColor)
 
         let glassMaterial = SCNMaterial()
         glassMaterial.diffuse.contents = glassFacade
         glassMaterial.metalness.contents = 0.18
         glassMaterial.roughness.contents = 0.3
-        glassMaterial.emission.contents = isActive ? lighting.glassGlowActive : lighting.glassGlowIdle
+        glassMaterial.emission.contents = modeEmission(base: isActive ? lighting.glassGlowActive : lighting.glassGlowIdle, district: district, cpuRatio: cpuRatio, memoryRatio: memoryRatio, districtColor: districtColor)
 
         let trimMaterial = SCNMaterial()
         trimMaterial.diffuse.contents = trimColor
@@ -838,8 +1096,10 @@ private struct SystemCitySceneView: NSViewRepresentable {
         addWindowBands(to: wrapper, district: district, width: width, length: length, height: height, color: districtColor, active: isActive)
         addSideWindowBands(to: wrapper, district: district, width: width, length: length, height: height, color: districtColor, active: isActive)
         addFacadeStripes(to: wrapper, width: width, length: length, height: height)
+        addEntranceGlow(to: wrapper, district: district, width: width, length: length, active: isActive)
+        addRooftopStatusPanel(to: wrapper, color: modeStatusColor(cpuRatio: cpuRatio, memoryRatio: memoryRatio, districtColor: districtColor), height: height, hotspotLevel: hotspotLevel)
         if hotspotLevel >= 0.62 {
-            addHotspotBeacon(to: wrapper, color: districtColor, height: height, intensity: hotspotLevel)
+            addHotspotBeacon(to: wrapper, color: modeStatusColor(cpuRatio: cpuRatio, memoryRatio: memoryRatio, districtColor: districtColor), height: height, intensity: hotspotLevel)
         }
 
         let hitbox = SCNBox(width: CGFloat(max(width * 1.8, 18)), height: CGFloat(max(height + 8, 20)), length: CGFloat(max(length * 1.8, 18)), chamferRadius: 2.6)
@@ -857,6 +1117,39 @@ private struct SystemCitySceneView: NSViewRepresentable {
         applyInteractionMask(Self.buildingInteractionMask, to: wrapper)
 
         return wrapper
+    }
+
+    private func modeEmission(base: NSColor, district: ProcessCityDistrict, cpuRatio: Float, memoryRatio: Float, districtColor: NSColor) -> NSColor {
+        switch visualMode {
+        case .live:
+            return base
+        case .thermal:
+            let alpha = CGFloat(0.04 + min(cpuRatio, 1) * 0.22)
+            return NSColor(calibratedRed: 1.0, green: 0.28 + CGFloat(cpuRatio) * 0.18, blue: 0.06, alpha: alpha)
+        case .memory:
+            let alpha = CGFloat(0.04 + min(memoryRatio, 1) * 0.22)
+            return NSColor(calibratedRed: 0.34, green: 0.58, blue: 1.0, alpha: alpha)
+        case .network:
+            let alpha: CGFloat = district == .networkSync ? 0.28 : 0.08
+            return NSColor(calibratedRed: 0.18, green: 0.95, blue: 0.78, alpha: alpha)
+        case .risk:
+            let risk = max(cpuRatio, memoryRatio)
+            let alpha = CGFloat(0.04 + risk * 0.25)
+            return NSColor(calibratedRed: 1.0, green: 0.16, blue: 0.20, alpha: alpha)
+        }
+    }
+
+    private func modeStatusColor(cpuRatio: Float, memoryRatio: Float, districtColor: NSColor) -> NSColor {
+        switch visualMode {
+        case .live: return districtColor
+        case .thermal: return NSColor(calibratedRed: 1.0, green: 0.42, blue: 0.10, alpha: 1.0)
+        case .memory: return NSColor(calibratedRed: 0.44, green: 0.68, blue: 1.0, alpha: 1.0)
+        case .network: return NSColor(calibratedRed: 0.32, green: 1.0, blue: 0.86, alpha: 1.0)
+        case .risk:
+            return max(cpuRatio, memoryRatio) >= 0.62
+                ? NSColor(calibratedRed: 1.0, green: 0.16, blue: 0.20, alpha: 1.0)
+                : districtColor
+        }
     }
 
     private func applyInteractionMask(_ mask: Int, to node: SCNNode) {
@@ -1109,6 +1402,45 @@ private struct SystemCitySceneView: NSViewRepresentable {
             let stripeNode = SCNNode(geometry: stripe)
             stripeNode.position = SCNVector3(0, y, 0)
             parent.addChildNode(stripeNode)
+        }
+    }
+
+    private func addEntranceGlow(to parent: SCNNode, district: ProcessCityDistrict, width: Float, length: Float, active: Bool) {
+        let lighting = district.lightingProfile
+        let entrance = SCNBox(width: CGFloat(max(width * 0.28, 2.2)), height: 2.2, length: 0.24, chamferRadius: 0.06)
+        let material = SCNMaterial()
+        material.diffuse.contents = active ? lighting.frontWindowActive : lighting.frontWindowIdle
+        material.emission.contents = active ? lighting.frontWindowActive : lighting.frontWindowIdle
+        entrance.materials = [material]
+
+        let node = SCNNode(geometry: entrance)
+        node.position = SCNVector3(0, 1.35, length / 2 + 0.22)
+        parent.addChildNode(node)
+
+        let canopy = SCNBox(width: CGFloat(max(width * 0.36, 3.0)), height: 0.26, length: 1.2, chamferRadius: 0.12)
+        canopy.firstMaterial?.diffuse.contents = NSColor(calibratedWhite: 0.16, alpha: 1.0)
+        canopy.firstMaterial?.emission.contents = district.sceneColor.withAlphaComponent(active ? 0.08 : 0.02)
+        let canopyNode = SCNNode(geometry: canopy)
+        canopyNode.position = SCNVector3(0, 2.6, length / 2 + 0.72)
+        parent.addChildNode(canopyNode)
+    }
+
+    private func addRooftopStatusPanel(to parent: SCNNode, color: NSColor, height: Float, hotspotLevel: Float) {
+        let panel = SCNCylinder(radius: CGFloat(0.8 + hotspotLevel * 0.6), height: 0.34)
+        panel.radialSegmentCount = 28
+        panel.firstMaterial?.diffuse.contents = color.withAlphaComponent(0.78)
+        panel.firstMaterial?.emission.contents = color.withAlphaComponent(0.55 + CGFloat(hotspotLevel) * 0.35)
+
+        let node = SCNNode(geometry: panel)
+        node.position = SCNVector3(0, height + 0.38, 0)
+        parent.addChildNode(node)
+
+        if visualMode == .thermal || visualMode == .risk {
+            let pulse = SCNAction.sequence([
+                .scale(to: CGFloat(1.0 + hotspotLevel * 0.10), duration: 0.55),
+                .scale(to: 1.0, duration: 0.8)
+            ])
+            node.runAction(.repeatForever(pulse))
         }
     }
 
@@ -1453,6 +1785,7 @@ private struct SystemCitySceneView: NSViewRepresentable {
                 if let name = current.name, name.hasPrefix("building-") {
                     let pidText = String(name.dropFirst("building-".count))
                     if let pid = Int32(pidText) {
+                        focusCamera(on: current)
                         onSelect(pid)
                         return
                     }
@@ -1468,6 +1801,26 @@ private struct SystemCitySceneView: NSViewRepresentable {
             let length = simd_length(flattened)
             guard length > 0.0001 else { return SIMD3<Float>(0, 0, 0) }
             return flattened / length
+        }
+
+        private func focusCamera(on node: SCNNode) {
+            guard let view, let pointOfView = view.pointOfView else { return }
+            let target = node.presentation.worldPosition
+            let camera = pointOfView.presentation.worldPosition
+            let offset = SCNVector3(camera.x - target.x, max(camera.y - target.y, 48), camera.z - target.z)
+            let length = max(sqrt(offset.x * offset.x + offset.y * offset.y + offset.z * offset.z), 1)
+            let direction = SCNVector3(offset.x / length, offset.y / length, offset.z / length)
+            let distance: CGFloat = 96
+
+            SCNTransaction.begin()
+            SCNTransaction.animationDuration = 0.45
+            view.defaultCameraController.target = SCNVector3(target.x, target.y + 22, target.z)
+            pointOfView.position = SCNVector3(
+                target.x + direction.x * distance,
+                target.y + max(direction.y * distance, 42),
+                target.z + direction.z * distance
+            )
+            SCNTransaction.commit()
         }
     }
 }
