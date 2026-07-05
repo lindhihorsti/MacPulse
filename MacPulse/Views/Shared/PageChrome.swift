@@ -161,24 +161,6 @@ struct BottomStatusBar: View {
             }
 
             Spacer()
-
-            // Settings button — always accessible
-            Button {
-                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-            } label: {
-                HStack(spacing: 5) {
-                    Image(systemName: "gearshape")
-                        .font(.system(size: 11, weight: .medium))
-                    Text("Settings")
-                        .font(.system(size: 11, weight: .medium))
-                }
-                .foregroundStyle(.textSecondary)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .background(Color.backgroundTertiary)
-                .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
-            }
-            .buttonStyle(.plain)
         }
         .padding(.horizontal, 18)
         .frame(height: 36)

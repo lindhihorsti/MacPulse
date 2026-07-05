@@ -154,6 +154,7 @@ struct ContentView: View {
 
 struct SidebarView: View {
     @Binding var selectedItem: NavigationItem?
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         VStack(spacing: 0) {
@@ -232,7 +233,7 @@ struct SidebarView: View {
                 .padding(.horizontal, 8)
 
             Button {
-                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                openWindow(id: AppWindowID.settings)
             } label: {
                 HStack(spacing: 9) {
                     Image(systemName: "gearshape")

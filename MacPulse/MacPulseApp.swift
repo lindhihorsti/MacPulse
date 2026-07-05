@@ -10,12 +10,12 @@ struct MacPulseApp: App {
     )
     @AppStorage(MacPulseSettings.Key.showMenuBarIcon)
     private var showMenuBarIcon = MacPulseSettings.Default.showMenuBarIcon
-
-    private let mainWindowID = "main-window"
+    @AppStorage(MacPulseSettings.Key.refreshInterval)
+    private var refreshInterval = MacPulseSettings.Default.refreshInterval
 
     var body: some Scene {
         // MARK: Main Window
-        WindowGroup(id: mainWindowID) {
+        WindowGroup(id: AppWindowID.main) {
             ContentView()
                 .frame(minWidth: 1020, minHeight: 720)
                 .environment(monitor)
@@ -24,26 +24,31 @@ struct MacPulseApp: App {
                 }
                 .onAppear {
                     if let window = NSApp.mainWindow ?? NSApp.keyWindow {
-                        window.identifier = NSUserInterfaceItemIdentifier(mainWindowID)
+                        window.identifier = NSUserInterfaceItemIdentifier(AppWindowID.main)
                         window.title = "MacPulse"
                     }
-                    monitor.start()
+                    monitor.start(interval: refreshInterval)
                     setupAlertMonitoring()
+                }
+                .onChange(of: refreshInterval) { _, newValue in
+                    monitor.start(interval: max(newValue, 0.5))
                 }
         }
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 1240, height: 820)
         .commands {
             CommandGroup(replacing: .appSettings) {
-                Button("Settings...") { openSettings() }
+                Button("Settings...") { openWindow(id: AppWindowID.settings) }
                     .keyboardShortcut(",", modifiers: .command)
             }
         }
 
         // MARK: Settings
-        Settings {
+        Window("Settings", id: AppWindowID.settings) {
             SettingsView()
+                .frame(width: 560, height: 380)
         }
+        .windowResizability(.contentSize)
 
         // MARK: Menu Bar
         MenuBarExtra(isInserted: $showMenuBarIcon) {
@@ -56,16 +61,12 @@ struct MacPulseApp: App {
 
     private func openMainWindow() {
         NSApp.activate(ignoringOtherApps: true)
-        if let window = NSApp.windows.first(where: { $0.identifier?.rawValue == mainWindowID }) {
+        if let window = NSApp.windows.first(where: { $0.identifier?.rawValue == AppWindowID.main }) {
             window.makeKeyAndOrderFront(nil)
             window.orderFrontRegardless()
         } else {
-            openWindow(id: mainWindowID)
+            openWindow(id: AppWindowID.main)
         }
-    }
-
-    private func openSettings() {
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
     }
 
     private func setupAlertMonitoring() {

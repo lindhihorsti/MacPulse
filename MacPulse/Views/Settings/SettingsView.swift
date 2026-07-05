@@ -23,6 +23,8 @@ struct SettingsView: View {
     private var privacyMode = MacPulseSettings.Default.privacyMode
 
     @State private var selectedSection: SettingsSection = .general
+    @State private var launchAtLoginError: String?
+    @State private var isSyncingLaunchAtLogin = false
 
     enum SettingsSection: String, CaseIterable, Identifiable {
         case general    = "General"
@@ -113,7 +115,8 @@ struct SettingsView: View {
                             menuBarShowCPU: $menuBarShowCPU,
                             menuBarShowMemory: $menuBarShowMemory,
                             launchAtLogin: $launchAtLogin,
-                            privacyMode: $privacyMode
+                            privacyMode: $privacyMode,
+                            launchAtLoginError: launchAtLoginError
                         )
                     case .monitoring:
                         MonitoringSettingsContent(refreshInterval: $refreshInterval)
@@ -134,6 +137,33 @@ struct SettingsView: View {
         }
         .frame(width: 560, height: 380)
         .background(Color.backgroundSecondary)
+        .onAppear(perform: syncLaunchAtLoginState)
+        .onChange(of: launchAtLogin) { _, enabled in
+            updateLaunchAtLogin(enabled)
+        }
+    }
+
+    private func syncLaunchAtLoginState() {
+        isSyncingLaunchAtLogin = true
+        launchAtLogin = LaunchAtLoginManager.isEnabled
+        isSyncingLaunchAtLogin = false
+    }
+
+    private func updateLaunchAtLogin(_ enabled: Bool) {
+        guard !isSyncingLaunchAtLogin else { return }
+
+        do {
+            try LaunchAtLoginManager.setEnabled(enabled)
+            launchAtLoginError = nil
+            isSyncingLaunchAtLogin = true
+            launchAtLogin = LaunchAtLoginManager.isEnabled
+            isSyncingLaunchAtLogin = false
+        } catch {
+            launchAtLoginError = error.localizedDescription
+            isSyncingLaunchAtLogin = true
+            launchAtLogin = LaunchAtLoginManager.isEnabled
+            isSyncingLaunchAtLogin = false
+        }
     }
 }
 
@@ -192,6 +222,7 @@ private struct GeneralSettingsContent: View {
     @Binding var menuBarShowMemory: Bool
     @Binding var launchAtLogin: Bool
     @Binding var privacyMode: Bool
+    let launchAtLoginError: String?
 
     var body: some View {
         ScrollView {
@@ -241,6 +272,14 @@ private struct GeneralSettingsContent: View {
                         subtitle: "Start MacPulse automatically on login",
                         isOn: $launchAtLogin
                     )
+                    if let launchAtLoginError {
+                        Divider().padding(.horizontal, 12)
+                        SettingsMessageRow(
+                            icon: "exclamationmark.triangle.fill",
+                            color: .warning,
+                            text: launchAtLoginError
+                        )
+                    }
                 }
             }
             .padding(16)
@@ -667,6 +706,32 @@ private struct SettingsSliderRow: View {
     }
 }
 
+private struct SettingsMessageRow: View {
+    let icon: String
+    let color: Color
+    let text: String
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: icon)
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundStyle(color)
+                .frame(width: 28, height: 28)
+                .background(color.opacity(0.14))
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+
+            Text(text)
+                .font(.system(size: 11))
+                .foregroundStyle(.textSecondary)
+                .lineLimit(3)
+
+            Spacer()
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+    }
+}
+
 // MARK: Legacy tab items (kept for macOS Settings window compatibility)
 struct GeneralSettingsTab: View {
     @Binding var showMenuBarIcon: Bool
@@ -680,7 +745,8 @@ struct GeneralSettingsTab: View {
             menuBarShowCPU: $menuBarShowCPU,
             menuBarShowMemory: $menuBarShowMemory,
             launchAtLogin: $launchAtLogin,
-            privacyMode: $privacyMode
+            privacyMode: $privacyMode,
+            launchAtLoginError: nil
         )
     }
 }

@@ -73,6 +73,8 @@
 		064 /* PortScanTargetValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165 /* PortScanTargetValidatorTests.swift */; };
 		065 /* IPAddressClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166 /* IPAddressClassifier.swift */; };
 		066 /* IPAddressClassifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167 /* IPAddressClassifierTests.swift */; };
+		067 /* AppWindowID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168 /* AppWindowID.swift */; };
+		068 /* LaunchAtLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169 /* LaunchAtLoginManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +156,8 @@
 		165 /* PortScanTargetValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortScanTargetValidatorTests.swift; sourceTree = "<group>"; };
 		166 /* IPAddressClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddressClassifier.swift; sourceTree = "<group>"; };
 		167 /* IPAddressClassifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddressClassifierTests.swift; sourceTree = "<group>"; };
+		168 /* AppWindowID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindowID.swift; sourceTree = "<group>"; };
+		169 /* LaunchAtLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginManager.swift; sourceTree = "<group>"; };
 		200 /* MacPulse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacPulse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		201 /* MacPulseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacPulseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -226,6 +230,8 @@
 				162 /* MemoryPressureCalculator.swift */,
 				164 /* PortScanTargetValidator.swift */,
 				166 /* IPAddressClassifier.swift */,
+				168 /* AppWindowID.swift */,
+				169 /* LaunchAtLoginManager.swift */,
 				132 /* libpcap-Bridging-Header.h */,
 				143 /* BPFPermissionHelper.swift */,
 			);
@@ -524,6 +530,8 @@
 				061 /* MemoryPressureCalculator.swift in Sources */,
 				063 /* PortScanTargetValidator.swift in Sources */,
 				065 /* IPAddressClassifier.swift in Sources */,
+				067 /* AppWindowID.swift in Sources */,
+				068 /* LaunchAtLoginManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
