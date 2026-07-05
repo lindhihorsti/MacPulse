@@ -1,0 +1,825 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		001 /* MacPulseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100 /* MacPulseApp.swift */; };
+		002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101 /* ContentView.swift */; };
+		003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 102 /* Assets.xcassets */; };
+		004 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103 /* Color+Extension.swift */; };
+		005 /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104 /* Font+Extension.swift */; };
+		006 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105 /* ViewModifiers.swift */; };
+		007 /* SectionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106 /* SectionCardView.swift */; };
+		008 /* StatusDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107 /* StatusDotView.swift */; };
+		009 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108 /* DashboardView.swift */; };
+		010 /* NetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109 /* NetworkView.swift */; };
+		011 /* ProcessListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110 /* ProcessListView.swift */; };
+		012 /* GaugeRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111 /* GaugeRingView.swift */; };
+		013 /* SparklineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112 /* SparklineView.swift */; };
+		014 /* BandwidthBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113 /* BandwidthBarView.swift */; };
+		015 /* SystemStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115 /* SystemStats.swift */; };
+		016 /* ProcessInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116 /* ProcessInfo.swift */; };
+		017 /* SystemMonitorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117 /* SystemMonitorService.swift */; };
+		018 /* ProcessMonitorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118 /* ProcessMonitorService.swift */; };
+		019 /* ByteFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119 /* ByteFormatter.swift */; };
+		020 /* NetworkDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120 /* NetworkDevice.swift */; };
+		021 /* NetworkMonitorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121 /* NetworkMonitorService.swift */; };
+		022 /* DeviceDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122 /* DeviceDiscoveryService.swift */; };
+		023 /* OUILookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123 /* OUILookup.swift */; };
+		024 /* GraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124 /* GraphNode.swift */; };
+		025 /* ForceLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125 /* ForceLayoutEngine.swift */; };
+		026 /* DeviceGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126 /* DeviceGraphView.swift */; };
+		027 /* PacketInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127 /* PacketInfo.swift */; };
+		028 /* PacketCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128 /* PacketCaptureService.swift */; };
+		029 /* PortScannerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129 /* PortScannerService.swift */; };
+		030 /* PacketCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130 /* PacketCaptureView.swift */; };
+		031 /* PortScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131 /* PortScanView.swift */; };
+		032 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133 /* MenuBarView.swift */; };
+		033 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134 /* SettingsView.swift */; };
+		034 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135 /* AlertService.swift */; };
+		035 /* TrafficFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136 /* TrafficFlow.swift */; };
+		036 /* TrafficFlowService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137 /* TrafficFlowService.swift */; };
+		037 /* TrafficFlowGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138 /* TrafficFlowGraphView.swift */; };
+		038 /* SystemCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139 /* SystemCityView.swift */; };
+		039 /* StorageFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140 /* StorageFlowView.swift */; };
+		040 /* world-map.svg in Resources */ = {isa = PBXBuildFile; fileRef = 141 /* world-map.svg */; };
+		041 /* PageChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142 /* PageChrome.swift */; };
+		042 /* BPFPermissionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143 /* BPFPermissionHelper.swift */; };
+		043 /* BPFPermissionBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144 /* BPFPermissionBanner.swift */; };
+		044 /* MacPulseSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145 /* MacPulseSettings.swift */; };
+		045 /* SystemCommandParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146 /* SystemCommandParsers.swift */; };
+		046 /* SystemCommandParsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147 /* SystemCommandParsersTests.swift */; };
+		047 /* FormattingAndMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148 /* FormattingAndMappingTests.swift */; };
+		048 /* PacketParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149 /* PacketParser.swift */; };
+		049 /* PacketParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150 /* PacketParserTests.swift */; };
+		050 /* DiskIOReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151 /* DiskIOReader.swift */; };
+		051 /* DiskIOReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152 /* DiskIOReaderTests.swift */; };
+		052 /* PrivacyRedactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153 /* PrivacyRedactor.swift */; };
+		053 /* PrivacyRedactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154 /* PrivacyRedactorTests.swift */; };
+		054 /* DiagnosticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155 /* DiagnosticsService.swift */; };
+		055 /* DiagnosticsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156 /* DiagnosticsServiceTests.swift */; };
+		056 /* TrafficFlowServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157 /* TrafficFlowServiceTests.swift */; };
+		057 /* NetworkCorrelationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158 /* NetworkCorrelationService.swift */; };
+		058 /* NetworkCorrelationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159 /* NetworkCorrelationServiceTests.swift */; };
+		059 /* ReportExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160 /* ReportExportService.swift */; };
+		060 /* ReportExportServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161 /* ReportExportServiceTests.swift */; };
+		061 /* MemoryPressureCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162 /* MemoryPressureCalculator.swift */; };
+		062 /* MemoryPressureCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163 /* MemoryPressureCalculatorTests.swift */; };
+		063 /* PortScanTargetValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164 /* PortScanTargetValidator.swift */; };
+		064 /* PortScanTargetValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165 /* PortScanTargetValidatorTests.swift */; };
+		065 /* IPAddressClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166 /* IPAddressClassifier.swift */; };
+		066 /* IPAddressClassifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167 /* IPAddressClassifierTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		551 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 700 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 500;
+			remoteInfo = MacPulse;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		100 /* MacPulseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPulseApp.swift; sourceTree = "<group>"; };
+		101 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		102 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		103 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		104 /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
+		105 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
+		106 /* SectionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCardView.swift; sourceTree = "<group>"; };
+		107 /* StatusDotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusDotView.swift; sourceTree = "<group>"; };
+		108 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		109 /* NetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkView.swift; sourceTree = "<group>"; };
+		110 /* ProcessListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessListView.swift; sourceTree = "<group>"; };
+		111 /* GaugeRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeRingView.swift; sourceTree = "<group>"; };
+		112 /* SparklineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparklineView.swift; sourceTree = "<group>"; };
+		113 /* BandwidthBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandwidthBarView.swift; sourceTree = "<group>"; };
+		114 /* MacPulse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacPulse.entitlements; sourceTree = "<group>"; };
+		115 /* SystemStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemStats.swift; sourceTree = "<group>"; };
+		116 /* ProcessInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessInfo.swift; sourceTree = "<group>"; };
+		117 /* SystemMonitorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMonitorService.swift; sourceTree = "<group>"; };
+		118 /* ProcessMonitorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessMonitorService.swift; sourceTree = "<group>"; };
+		119 /* ByteFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteFormatter.swift; sourceTree = "<group>"; };
+		120 /* NetworkDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDevice.swift; sourceTree = "<group>"; };
+		121 /* NetworkMonitorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorService.swift; sourceTree = "<group>"; };
+		122 /* DeviceDiscoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDiscoveryService.swift; sourceTree = "<group>"; };
+		123 /* OUILookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OUILookup.swift; sourceTree = "<group>"; };
+		124 /* GraphNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphNode.swift; sourceTree = "<group>"; };
+		125 /* ForceLayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceLayoutEngine.swift; sourceTree = "<group>"; };
+		126 /* DeviceGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceGraphView.swift; sourceTree = "<group>"; };
+		127 /* PacketInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketInfo.swift; sourceTree = "<group>"; };
+		128 /* PacketCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketCaptureService.swift; sourceTree = "<group>"; };
+		129 /* PortScannerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortScannerService.swift; sourceTree = "<group>"; };
+		130 /* PacketCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketCaptureView.swift; sourceTree = "<group>"; };
+		131 /* PortScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortScanView.swift; sourceTree = "<group>"; };
+		132 /* libpcap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "libpcap-Bridging-Header.h"; sourceTree = "<group>"; };
+		133 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		134 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		135 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		136 /* TrafficFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficFlow.swift; sourceTree = "<group>"; };
+		137 /* TrafficFlowService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficFlowService.swift; sourceTree = "<group>"; };
+		138 /* TrafficFlowGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficFlowGraphView.swift; sourceTree = "<group>"; };
+		139 /* SystemCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemCityView.swift; sourceTree = "<group>"; };
+		140 /* StorageFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageFlowView.swift; sourceTree = "<group>"; };
+		141 /* world-map.svg */ = {isa = PBXFileReference; lastKnownFileType = image.svg; path = "world-map.svg"; sourceTree = "<group>"; };
+		142 /* PageChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageChrome.swift; sourceTree = "<group>"; };
+		143 /* BPFPermissionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPFPermissionHelper.swift; sourceTree = "<group>"; };
+		144 /* BPFPermissionBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPFPermissionBanner.swift; sourceTree = "<group>"; };
+		145 /* MacPulseSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPulseSettings.swift; sourceTree = "<group>"; };
+		146 /* SystemCommandParsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemCommandParsers.swift; sourceTree = "<group>"; };
+		147 /* SystemCommandParsersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemCommandParsersTests.swift; sourceTree = "<group>"; };
+		148 /* FormattingAndMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattingAndMappingTests.swift; sourceTree = "<group>"; };
+		149 /* PacketParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketParser.swift; sourceTree = "<group>"; };
+		150 /* PacketParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketParserTests.swift; sourceTree = "<group>"; };
+		151 /* DiskIOReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskIOReader.swift; sourceTree = "<group>"; };
+		152 /* DiskIOReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskIOReaderTests.swift; sourceTree = "<group>"; };
+		153 /* PrivacyRedactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyRedactor.swift; sourceTree = "<group>"; };
+		154 /* PrivacyRedactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyRedactorTests.swift; sourceTree = "<group>"; };
+		155 /* DiagnosticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsService.swift; sourceTree = "<group>"; };
+		156 /* DiagnosticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsServiceTests.swift; sourceTree = "<group>"; };
+		157 /* TrafficFlowServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficFlowServiceTests.swift; sourceTree = "<group>"; };
+		158 /* NetworkCorrelationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCorrelationService.swift; sourceTree = "<group>"; };
+		159 /* NetworkCorrelationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCorrelationServiceTests.swift; sourceTree = "<group>"; };
+		160 /* ReportExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportExportService.swift; sourceTree = "<group>"; };
+		161 /* ReportExportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportExportServiceTests.swift; sourceTree = "<group>"; };
+		162 /* MemoryPressureCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPressureCalculator.swift; sourceTree = "<group>"; };
+		163 /* MemoryPressureCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPressureCalculatorTests.swift; sourceTree = "<group>"; };
+		164 /* PortScanTargetValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortScanTargetValidator.swift; sourceTree = "<group>"; };
+		165 /* PortScanTargetValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortScanTargetValidatorTests.swift; sourceTree = "<group>"; };
+		166 /* IPAddressClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddressClassifier.swift; sourceTree = "<group>"; };
+		167 /* IPAddressClassifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddressClassifierTests.swift; sourceTree = "<group>"; };
+		200 /* MacPulse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacPulse.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		201 /* MacPulseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacPulseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		300 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		512 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		400 = {
+			isa = PBXGroup;
+			children = (
+				401 /* MacPulse */,
+				415 /* MacPulseTests */,
+				402 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		401 /* MacPulse */ = {
+			isa = PBXGroup;
+			children = (
+				100 /* MacPulseApp.swift */,
+				101 /* ContentView.swift */,
+				102 /* Assets.xcassets */,
+				114 /* MacPulse.entitlements */,
+				403 /* Helpers */,
+				404 /* Views */,
+				405 /* Services */,
+				406 /* Models */,
+				407 /* Resources */,
+			);
+			path = MacPulse;
+			sourceTree = "<group>";
+		};
+		402 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				200 /* MacPulse.app */,
+				201 /* MacPulseTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		403 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				103 /* Color+Extension.swift */,
+				104 /* Font+Extension.swift */,
+				105 /* ViewModifiers.swift */,
+				119 /* ByteFormatter.swift */,
+				123 /* OUILookup.swift */,
+				145 /* MacPulseSettings.swift */,
+				146 /* SystemCommandParsers.swift */,
+				149 /* PacketParser.swift */,
+				151 /* DiskIOReader.swift */,
+				153 /* PrivacyRedactor.swift */,
+				162 /* MemoryPressureCalculator.swift */,
+				164 /* PortScanTargetValidator.swift */,
+				166 /* IPAddressClassifier.swift */,
+				132 /* libpcap-Bridging-Header.h */,
+				143 /* BPFPermissionHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		404 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				408 /* Dashboard */,
+				409 /* Network */,
+				410 /* Shared */,
+				411 /* MenuBar */,
+				412 /* Settings */,
+				413 /* City */,
+				414 /* Storage */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		405 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				117 /* SystemMonitorService.swift */,
+				118 /* ProcessMonitorService.swift */,
+				121 /* NetworkMonitorService.swift */,
+				122 /* DeviceDiscoveryService.swift */,
+				125 /* ForceLayoutEngine.swift */,
+				128 /* PacketCaptureService.swift */,
+				129 /* PortScannerService.swift */,
+				135 /* AlertService.swift */,
+				137 /* TrafficFlowService.swift */,
+				155 /* DiagnosticsService.swift */,
+				158 /* NetworkCorrelationService.swift */,
+				160 /* ReportExportService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		406 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				115 /* SystemStats.swift */,
+				116 /* ProcessInfo.swift */,
+				120 /* NetworkDevice.swift */,
+				124 /* GraphNode.swift */,
+				127 /* PacketInfo.swift */,
+				136 /* TrafficFlow.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		407 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				141 /* world-map.svg */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		408 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				108 /* DashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		409 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				109 /* NetworkView.swift */,
+				126 /* DeviceGraphView.swift */,
+				130 /* PacketCaptureView.swift */,
+				131 /* PortScanView.swift */,
+				138 /* TrafficFlowGraphView.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		410 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				106 /* SectionCardView.swift */,
+				107 /* StatusDotView.swift */,
+				111 /* GaugeRingView.swift */,
+				112 /* SparklineView.swift */,
+				113 /* BandwidthBarView.swift */,
+				142 /* PageChrome.swift */,
+				110 /* ProcessListView.swift */,
+				144 /* BPFPermissionBanner.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		411 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				133 /* MenuBarView.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		412 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				134 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		413 /* City */ = {
+			isa = PBXGroup;
+			children = (
+				139 /* SystemCityView.swift */,
+			);
+			path = City;
+			sourceTree = "<group>";
+		};
+		414 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				140 /* StorageFlowView.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		415 /* MacPulseTests */ = {
+			isa = PBXGroup;
+			children = (
+				147 /* SystemCommandParsersTests.swift */,
+				148 /* FormattingAndMappingTests.swift */,
+				150 /* PacketParserTests.swift */,
+				152 /* DiskIOReaderTests.swift */,
+				154 /* PrivacyRedactorTests.swift */,
+				156 /* DiagnosticsServiceTests.swift */,
+				157 /* TrafficFlowServiceTests.swift */,
+				159 /* NetworkCorrelationServiceTests.swift */,
+				161 /* ReportExportServiceTests.swift */,
+				163 /* MemoryPressureCalculatorTests.swift */,
+				165 /* PortScanTargetValidatorTests.swift */,
+				167 /* IPAddressClassifierTests.swift */,
+			);
+			path = MacPulseTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		500 /* MacPulse */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 600 /* Build configuration list for PBXNativeTarget "MacPulse" */;
+			buildPhases = (
+				501 /* Sources */,
+				300 /* Frameworks */,
+				502 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MacPulse;
+			productName = MacPulse;
+			productReference = 200 /* MacPulse.app */;
+			productType = "com.apple.product-type.application";
+		};
+		510 /* MacPulseTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 601 /* Build configuration list for PBXNativeTarget "MacPulseTests" */;
+			buildPhases = (
+				511 /* Sources */,
+				512 /* Frameworks */,
+				513 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				550 /* PBXTargetDependency */,
+			);
+			name = MacPulseTests;
+			productName = MacPulseTests;
+			productReference = 201 /* MacPulseTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		700 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 2630;
+				TargetAttributes = {
+					500 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					510 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 500;
+					};
+				};
+			};
+			buildConfigurationList = 701 /* Build configuration list for PBXProject "MacPulse" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 400;
+			productRefGroup = 402 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				500 /* MacPulse */,
+				510 /* MacPulseTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		502 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				003 /* Assets.xcassets in Resources */,
+				040 /* world-map.svg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		513 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		501 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				001 /* MacPulseApp.swift in Sources */,
+				002 /* ContentView.swift in Sources */,
+				004 /* Color+Extension.swift in Sources */,
+				005 /* Font+Extension.swift in Sources */,
+				006 /* ViewModifiers.swift in Sources */,
+				007 /* SectionCardView.swift in Sources */,
+				008 /* StatusDotView.swift in Sources */,
+				009 /* DashboardView.swift in Sources */,
+				010 /* NetworkView.swift in Sources */,
+				011 /* ProcessListView.swift in Sources */,
+				012 /* GaugeRingView.swift in Sources */,
+				013 /* SparklineView.swift in Sources */,
+				014 /* BandwidthBarView.swift in Sources */,
+				041 /* PageChrome.swift in Sources */,
+				015 /* SystemStats.swift in Sources */,
+				016 /* ProcessInfo.swift in Sources */,
+				017 /* SystemMonitorService.swift in Sources */,
+				018 /* ProcessMonitorService.swift in Sources */,
+				019 /* ByteFormatter.swift in Sources */,
+				020 /* NetworkDevice.swift in Sources */,
+				021 /* NetworkMonitorService.swift in Sources */,
+				022 /* DeviceDiscoveryService.swift in Sources */,
+				023 /* OUILookup.swift in Sources */,
+				024 /* GraphNode.swift in Sources */,
+				025 /* ForceLayoutEngine.swift in Sources */,
+				026 /* DeviceGraphView.swift in Sources */,
+				027 /* PacketInfo.swift in Sources */,
+				028 /* PacketCaptureService.swift in Sources */,
+				029 /* PortScannerService.swift in Sources */,
+				030 /* PacketCaptureView.swift in Sources */,
+				031 /* PortScanView.swift in Sources */,
+				032 /* MenuBarView.swift in Sources */,
+				033 /* SettingsView.swift in Sources */,
+				034 /* AlertService.swift in Sources */,
+				035 /* TrafficFlow.swift in Sources */,
+				036 /* TrafficFlowService.swift in Sources */,
+				037 /* TrafficFlowGraphView.swift in Sources */,
+				038 /* SystemCityView.swift in Sources */,
+				039 /* StorageFlowView.swift in Sources */,
+				042 /* BPFPermissionHelper.swift in Sources */,
+				043 /* BPFPermissionBanner.swift in Sources */,
+				044 /* MacPulseSettings.swift in Sources */,
+				045 /* SystemCommandParsers.swift in Sources */,
+				048 /* PacketParser.swift in Sources */,
+				050 /* DiskIOReader.swift in Sources */,
+				052 /* PrivacyRedactor.swift in Sources */,
+				054 /* DiagnosticsService.swift in Sources */,
+				057 /* NetworkCorrelationService.swift in Sources */,
+				059 /* ReportExportService.swift in Sources */,
+				061 /* MemoryPressureCalculator.swift in Sources */,
+				063 /* PortScanTargetValidator.swift in Sources */,
+				065 /* IPAddressClassifier.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		511 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				046 /* SystemCommandParsersTests.swift in Sources */,
+				047 /* FormattingAndMappingTests.swift in Sources */,
+				049 /* PacketParserTests.swift in Sources */,
+				051 /* DiskIOReaderTests.swift in Sources */,
+				053 /* PrivacyRedactorTests.swift in Sources */,
+				055 /* DiagnosticsServiceTests.swift in Sources */,
+				056 /* TrafficFlowServiceTests.swift in Sources */,
+				058 /* NetworkCorrelationServiceTests.swift in Sources */,
+				060 /* ReportExportServiceTests.swift in Sources */,
+				062 /* MemoryPressureCalculatorTests.swift in Sources */,
+				064 /* PortScanTargetValidatorTests.swift in Sources */,
+				066 /* IPAddressClassifierTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		550 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 500 /* MacPulse */;
+			targetProxy = 551 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		800 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		801 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		802 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MacPulse/MacPulse.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-lpcap";
+				PRODUCT_BUNDLE_IDENTIFIER = com.macpulse.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "MacPulse/Helpers/libpcap-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		803 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MacPulse/MacPulse.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-lpcap";
+				PRODUCT_BUNDLE_IDENTIFIER = com.macpulse.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "MacPulse/Helpers/libpcap-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		804 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macpulse.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MacPulse.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MacPulse";
+			};
+			name = Debug;
+		};
+		805 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macpulse.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MacPulse.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MacPulse";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		600 /* Build configuration list for PBXNativeTarget "MacPulse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				802 /* Debug */,
+				803 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		601 /* Build configuration list for PBXNativeTarget "MacPulseTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				804 /* Debug */,
+				805 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		701 /* Build configuration list for PBXProject "MacPulse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				800 /* Debug */,
+				801 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 700 /* Project object */;
+}

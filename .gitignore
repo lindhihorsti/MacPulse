@@ -1,0 +1,14 @@
+.DS_Store
+
+# Xcode local state
+xcuserdata/
+DerivedData/
+*.xcuserstate
+
+# Local assistant/tool settings
+.claude/settings.local.json
+
+# Build products
+build/
+*.ipa
+*.dSYM/
