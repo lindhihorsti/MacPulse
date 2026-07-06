@@ -6,6 +6,8 @@ struct SparklineView: View {
     let color: Color
     let showArea: Bool
     let height: CGFloat
+    @AppStorage(MacPulseSettings.Key.appTheme)
+    private var appTheme = MacPulseSettings.Default.appTheme
 
     init(
         data: [Double],
@@ -27,6 +29,10 @@ struct SparklineView: View {
         max(data.max() ?? 100, 1)
     }
 
+    private var isLightTheme: Bool {
+        MacPulseTheme(rawValue: appTheme) == .light
+    }
+
     var body: some View {
         Chart(chartData, id: \.index) { item in
             if showArea {
@@ -36,7 +42,10 @@ struct SparklineView: View {
                 )
                 .foregroundStyle(
                     LinearGradient(
-                        colors: [color.opacity(0.3), color.opacity(0.05)],
+                        colors: [
+                            color.opacity(isLightTheme ? 0.22 : 0.3),
+                            color.opacity(isLightTheme ? 0.04 : 0.05)
+                        ],
                         startPoint: .top,
                         endPoint: .bottom
                     )
@@ -50,12 +59,18 @@ struct SparklineView: View {
             )
             .foregroundStyle(color)
             .interpolationMethod(.catmullRom)
-            .lineStyle(StrokeStyle(lineWidth: 2))
+            .lineStyle(StrokeStyle(lineWidth: isLightTheme ? 2.4 : 2))
         }
         .chartXAxis(.hidden)
         .chartYAxis(.hidden)
         .chartYScale(domain: 0...maxValue)
+        .chartPlotStyle { plotArea in
+            plotArea
+                .background(Color.backgroundTertiary.opacity(isLightTheme ? 0.42 : 0.12))
+                .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+        }
         .frame(height: height)
+        .id("sparkline-\(appTheme)")
     }
 }
 

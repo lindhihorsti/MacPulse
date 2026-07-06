@@ -82,6 +82,8 @@ struct ContentView: View {
     @State private var selectedItem: NavigationItem? = .dashboard
     @State private var deviceDiscovery = DeviceDiscoveryService()
     @State private var showSplash = true
+    @AppStorage(MacPulseSettings.Key.appTheme)
+    private var appTheme = MacPulseSettings.Default.appTheme
 
     var body: some View {
         ZStack {
@@ -103,6 +105,7 @@ struct ContentView: View {
                 .background(Color.backgroundPrimary)
             }
             .background(Color.backgroundPrimary)
+            .id("main-layout-\(appTheme)")
 
             // Launch splash overlay
             if showSplash {
@@ -320,7 +323,7 @@ struct SidebarItemView: View {
             .background {
                 if isSelected || isHovered {
                     RoundedRectangle(cornerRadius: 9, style: .continuous)
-                        .fill(isSelected ? item.accentColor.opacity(0.07) : Color.white.opacity(0.03))
+                        .fill(isSelected ? item.accentColor.opacity(0.08) : Color.backgroundHover.opacity(0.55))
                         .padding(.horizontal, 7)
                 }
             }

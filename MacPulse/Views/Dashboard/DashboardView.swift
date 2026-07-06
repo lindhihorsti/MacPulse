@@ -660,6 +660,12 @@ struct SpeedIndicator: View {
 struct NetworkGraphView: View {
     let inData: [Double]
     let outData: [Double]
+    @AppStorage(MacPulseSettings.Key.appTheme)
+    private var appTheme = MacPulseSettings.Default.appTheme
+
+    private var isLightTheme: Bool {
+        MacPulseTheme(rawValue: appTheme) == .light
+    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -684,7 +690,10 @@ struct NetworkGraphView: View {
                 }
                 .fill(
                     LinearGradient(
-                        colors: [Color.success.opacity(0.3), Color.success.opacity(0.05)],
+                        colors: [
+                            Color.success.opacity(isLightTheme ? 0.22 : 0.3),
+                            Color.success.opacity(isLightTheme ? 0.04 : 0.05)
+                        ],
                         startPoint: .top,
                         endPoint: .bottom
                     )
@@ -708,7 +717,10 @@ struct NetworkGraphView: View {
                 }
                 .fill(
                     LinearGradient(
-                        colors: [Color.appAccent.opacity(0.3), Color.appAccent.opacity(0.05)],
+                        colors: [
+                            Color.appAccent.opacity(isLightTheme ? 0.22 : 0.3),
+                            Color.appAccent.opacity(isLightTheme ? 0.04 : 0.05)
+                        ],
                         startPoint: .top,
                         endPoint: .bottom
                     )
@@ -729,7 +741,7 @@ struct NetworkGraphView: View {
                         }
                     }
                 }
-                .stroke(Color.success, lineWidth: 1.5)
+                .stroke(Color.success, lineWidth: isLightTheme ? 2.0 : 1.5)
 
                 // Upload line
                 Path { path in
@@ -746,11 +758,12 @@ struct NetworkGraphView: View {
                         }
                     }
                 }
-                .stroke(Color.appAccent, lineWidth: 1.5)
+                .stroke(Color.appAccent, lineWidth: isLightTheme ? 2.0 : 1.5)
             }
         }
-        .background(Color.backgroundTertiary.opacity(0.5))
+        .background(Color.backgroundTertiary.opacity(isLightTheme ? 0.72 : 0.5))
         .clipShape(RoundedRectangle(cornerRadius: 6))
+        .id("network-graph-\(appTheme)")
     }
 }
 

@@ -7,6 +7,8 @@ struct SectionCardView<Content: View>: View {
     @ViewBuilder let content: () -> Content
 
     @State private var isHovered = false
+    @AppStorage(MacPulseSettings.Key.appTheme)
+    private var appTheme = MacPulseSettings.Default.appTheme
 
     init(
         title: String,
@@ -56,6 +58,7 @@ struct SectionCardView<Content: View>: View {
                 }
         }
         .scaleEffect(isHovered ? 1.006 : 1.0)
+        .id("section-card-\(title)-\(appTheme)")
         .animation(.spring(response: 0.28, dampingFraction: 0.72), value: isHovered)
         .onHover { isHovered = $0 }
     }
