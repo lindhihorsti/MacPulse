@@ -546,22 +546,26 @@ struct TrafficFlowGraphView: View {
                     .frame(width: 46, height: 46)
 
                 Circle()
-                    .stroke(isSelected ? Color.white : color, lineWidth: isSelected ? 3 : 2)
+                    .stroke(isSelected ? Color.textPrimary : color, lineWidth: isSelected ? 3 : 2)
                     .frame(width: 46, height: 46)
 
                 Image(systemName: icon)
                     .font(.system(size: 17, weight: .medium))
-                    .foregroundStyle(isActive ? .white : .white.opacity(0.5))
+                    .foregroundStyle(isActive ? Color.white : Color.textSecondary)
             }
 
             Text(label)
                 .font(.system(size: 10, weight: .semibold))
-                .foregroundStyle(isActive ? .white : .white.opacity(0.5))
+                .foregroundStyle(isActive ? Color.white : Color.textPrimary)
                 .lineLimit(1)
                 .frame(maxWidth: 110)
                 .padding(.horizontal, 6)
                 .padding(.vertical, 3)
-                .background(Color.black.opacity(0.75))
+                .background(isActive ? Color.black.opacity(0.72) : Color.backgroundSecondary.opacity(0.96))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.surfaceBorderMedium, lineWidth: 1)
+                )
                 .clipShape(RoundedRectangle(cornerRadius: 4))
 
             if isActive && currentTraffic > 50 {
@@ -575,10 +579,14 @@ struct TrafficFlowGraphView: View {
             } else if totalTraffic > 0 {
                 Text(formatBytes(Double(totalTraffic)))
                     .font(.system(size: 9, design: .monospaced))
-                    .foregroundStyle(.white.opacity(0.4))
+                    .foregroundStyle(.textSecondary)
                     .padding(.horizontal, 5)
                     .padding(.vertical, 2)
-                    .background(Color.gray.opacity(0.3))
+                    .background(Color.backgroundTertiary)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 3)
+                            .stroke(Color.surfaceBorder, lineWidth: 1)
+                    )
                     .clipShape(RoundedRectangle(cornerRadius: 3))
             }
         }
@@ -1187,23 +1195,27 @@ struct Graph3DContent: View {
                     .frame(width: 34, height: 34)
 
                 Circle()
-                    .stroke(isSelected ? Color.white : color, lineWidth: isSelected ? 3 : 2)
+                    .stroke(isSelected ? Color.textPrimary : color, lineWidth: isSelected ? 3 : 2)
                     .frame(width: 34, height: 34)
 
                 Image(systemName: icon)
                     .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(isActive ? .white : .white.opacity(0.5))
+                    .foregroundStyle(isActive ? Color.white : Color.textSecondary)
             }
 
             if node.showsLabel {
                 Text(node.label)
                     .font(.system(size: 9, weight: .semibold))
-                    .foregroundStyle(isActive || isSelected || isLocal || isGateway ? .white : .white.opacity(0.6))
+                    .foregroundStyle(isActive ? Color.white : Color.textPrimary)
                     .lineLimit(1)
                     .frame(maxWidth: 92)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 3)
-                    .background(Color.black.opacity(0.78))
+                    .background(isActive ? Color.black.opacity(0.72) : Color.backgroundSecondary.opacity(0.96))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.surfaceBorderMedium, lineWidth: 1)
+                    )
                     .clipShape(RoundedRectangle(cornerRadius: 4))
             }
 
@@ -1218,10 +1230,14 @@ struct Graph3DContent: View {
             } else if isSelected && totalTraffic > 0 {
                 Text(formatBytes(Double(totalTraffic)))
                     .font(.system(size: 9, design: .monospaced))
-                    .foregroundStyle(.white.opacity(0.4))
+                    .foregroundStyle(.textSecondary)
                     .padding(.horizontal, 5)
                     .padding(.vertical, 2)
-                    .background(Color.gray.opacity(0.3))
+                    .background(Color.backgroundTertiary)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 3)
+                            .stroke(Color.surfaceBorder, lineWidth: 1)
+                    )
                     .clipShape(RoundedRectangle(cornerRadius: 3))
             }
         }

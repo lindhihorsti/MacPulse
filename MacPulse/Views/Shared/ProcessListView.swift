@@ -415,7 +415,7 @@ struct ProcessResourcePanel: View {
                             GeometryReader { geo in
                                 ZStack(alignment: .leading) {
                                     Capsule()
-                                        .fill(Color.white.opacity(0.08))
+                                        .fill(Color.backgroundTertiary)
                                     Capsule()
                                         .fill(accent.opacity(0.9))
                                         .frame(width: geo.size.width * max(0.06, min(ratio(process), 1.0)))
@@ -653,7 +653,7 @@ struct ProcessDualBar: View {
         VStack(spacing: 5) {
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
-                    Capsule().fill(Color.white.opacity(0.08))
+                    Capsule().fill(Color.backgroundTertiary)
                     Capsule()
                         .fill(Color.cpuColor)
                         .frame(width: geo.size.width * max(0.04, min(cpuRatio, 1.0)))
@@ -663,7 +663,7 @@ struct ProcessDualBar: View {
 
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
-                    Capsule().fill(Color.white.opacity(0.08))
+                    Capsule().fill(Color.backgroundTertiary)
                     Capsule()
                         .fill(Color.ramColor)
                         .frame(width: geo.size.width * max(0.04, min(memoryRatio, 1.0)))
@@ -865,15 +865,15 @@ struct SankeyDiagramView: View {
                                 Image(systemName: "xmark")
                                     .font(.system(size: 9, weight: .bold))
                             }
-                            .foregroundStyle(.white.opacity(0.92))
+                            .foregroundStyle(.textPrimary)
                             .padding(.horizontal, 10)
                             .padding(.vertical, 6)
                             .background(
                                 Capsule(style: .continuous)
-                                    .fill(Color.white.opacity(0.07))
+                                    .fill(Color.backgroundTertiary)
                                     .overlay(
                                         Capsule(style: .continuous)
-                                            .stroke(Color.white.opacity(0.08), lineWidth: 1)
+                                            .stroke(Color.surfaceBorderMedium, lineWidth: 1)
                                     )
                             )
                         }
@@ -900,7 +900,7 @@ struct SankeyDiagramView: View {
                             ForEach(0..<columns, id: \.self) { column in
                                 let frame = columnFrame(for: column, in: boardSize, totalColumns: columns)
                                 RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color.white.opacity(0.025))
+                                    .fill(Color.backgroundHover.opacity(0.35))
                                     .frame(width: frame.width, height: boardSize.height - 18)
                                     .position(x: frame.midX, y: boardSize.height / 2)
                             }
@@ -910,7 +910,7 @@ struct SankeyDiagramView: View {
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(columnTitles.indices.contains(column) ? columnTitles[column] : "Stage \(column + 1)")
                                         .font(.system(size: 12, weight: .semibold))
-                                        .foregroundStyle(.white.opacity(0.90))
+                                        .foregroundStyle(.textPrimary)
                                     Text(stageCaption(for: column, totalColumns: columns))
                                         .font(.system(size: 10, weight: .medium))
                                         .foregroundStyle(.textTertiary)
@@ -1046,7 +1046,7 @@ struct SankeyDiagramView: View {
                                             HStack(alignment: .firstTextBaseline, spacing: 8) {
                                                 Text(node.item.title)
                                                     .font(.system(size: 13, weight: .semibold))
-                                                    .foregroundStyle(.white.opacity(isDimmedNode ? 0.32 : 0.95))
+                                                    .foregroundStyle(isDimmedNode ? Color.textTertiary.opacity(0.62) : Color.textPrimary)
                                                     .lineLimit(2)
 
                                                 Spacer(minLength: 0)
@@ -1071,7 +1071,7 @@ struct SankeyDiagramView: View {
                                             if let subtitle = node.item.subtitle {
                                                 Text(subtitle)
                                                     .font(.system(size: 11))
-                                                    .foregroundStyle(.white.opacity(isDimmedNode ? 0.20 : 0.55))
+                                                    .foregroundStyle(isDimmedNode ? Color.textTertiary.opacity(0.45) : Color.textSecondary)
                                                     .lineLimit(2)
                                             }
                                         }
