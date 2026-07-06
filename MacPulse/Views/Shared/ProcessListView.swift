@@ -841,6 +841,40 @@ struct SankeyDiagramView: View {
     let nodes: [SankeyNodeItem]
     let links: [SankeyLinkItem]
     @State private var focusedNodeID: String?
+    @AppStorage(MacPulseSettings.Key.appTheme)
+    private var appTheme = MacPulseSettings.Default.appTheme
+
+    private var isLightTheme: Bool {
+        MacPulseTheme(rawValue: appTheme) == .light
+    }
+
+    private var boardSurface: Color {
+        isLightTheme ? Color(hex: 0xE6ECF6) : Color(hex: 0x141C2E)
+    }
+
+    private var columnSurface: Color {
+        isLightTheme ? Color(hex: 0xF8FAFC) : Color(hex: 0x1C2840).opacity(0.42)
+    }
+
+    private var nodeSurface: Color {
+        isLightTheme ? Color(hex: 0xFFFFFF) : Color(hex: 0x0D1321)
+    }
+
+    private var nodeSurfaceDimmed: Color {
+        isLightTheme ? Color(hex: 0xF1F5F9) : Color(hex: 0x0D1321).opacity(0.55)
+    }
+
+    private var nodeTitleColor: Color {
+        isLightTheme ? Color(hex: 0x0F172A) : Color.white.opacity(0.95)
+    }
+
+    private var nodeSubtitleColor: Color {
+        isLightTheme ? Color(hex: 0x475467) : Color.white.opacity(0.62)
+    }
+
+    private var nodeMutedColor: Color {
+        isLightTheme ? Color(hex: 0x98A2B3) : Color.white.opacity(0.30)
+    }
 
     var body: some View {
         SectionCardView(title: title, icon: "arrow.left.arrow.right.square", iconColor: .appAccent) {
@@ -865,12 +899,12 @@ struct SankeyDiagramView: View {
                                 Image(systemName: "xmark")
                                     .font(.system(size: 9, weight: .bold))
                             }
-                            .foregroundStyle(.textPrimary)
+                            .foregroundStyle(nodeTitleColor)
                             .padding(.horizontal, 10)
                             .padding(.vertical, 6)
                             .background(
                                 Capsule(style: .continuous)
-                                    .fill(Color.backgroundTertiary)
+                                    .fill(nodeSurface)
                                     .overlay(
                                         Capsule(style: .continuous)
                                             .stroke(Color.surfaceBorderMedium, lineWidth: 1)
@@ -891,7 +925,7 @@ struct SankeyDiagramView: View {
 
                         ZStack(alignment: .topLeading) {
                             RoundedRectangle(cornerRadius: 18)
-                                .fill(Color.backgroundTertiary)
+                                .fill(boardSurface)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 18)
                                         .strokeBorder(Color.surfaceBorder, lineWidth: 1)
@@ -900,7 +934,7 @@ struct SankeyDiagramView: View {
                             ForEach(0..<columns, id: \.self) { column in
                                 let frame = columnFrame(for: column, in: boardSize, totalColumns: columns)
                                 RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color.backgroundHover.opacity(0.35))
+                                    .fill(columnSurface)
                                     .frame(width: frame.width, height: boardSize.height - 18)
                                     .position(x: frame.midX, y: boardSize.height / 2)
                             }
@@ -910,17 +944,17 @@ struct SankeyDiagramView: View {
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(columnTitles.indices.contains(column) ? columnTitles[column] : "Stage \(column + 1)")
                                         .font(.system(size: 12, weight: .semibold))
-                                        .foregroundStyle(.textPrimary)
+                                        .foregroundStyle(nodeTitleColor)
                                     Text(stageCaption(for: column, totalColumns: columns))
                                         .font(.system(size: 10, weight: .medium))
-                                        .foregroundStyle(.textTertiary)
+                                        .foregroundStyle(nodeSubtitleColor)
                                         .tracking(0.2)
                                 }
                                 .padding(.horizontal, 14)
                                 .padding(.vertical, 7)
                                 .background(
                                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                        .fill(Color.backgroundSecondary)
+                                        .fill(nodeSurface)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                                 .strokeBorder(Color.surfaceBorderMedium, lineWidth: 1)
@@ -1046,7 +1080,7 @@ struct SankeyDiagramView: View {
                                             HStack(alignment: .firstTextBaseline, spacing: 8) {
                                                 Text(node.item.title)
                                                     .font(.system(size: 13, weight: .semibold))
-                                                    .foregroundStyle(isDimmedNode ? Color.textTertiary.opacity(0.62) : Color.textPrimary)
+                                                    .foregroundStyle(isDimmedNode ? nodeMutedColor : nodeTitleColor)
                                                     .lineLimit(2)
 
                                                 Spacer(minLength: 0)
@@ -1071,7 +1105,7 @@ struct SankeyDiagramView: View {
                                             if let subtitle = node.item.subtitle {
                                                 Text(subtitle)
                                                     .font(.system(size: 11))
-                                                    .foregroundStyle(isDimmedNode ? Color.textTertiary.opacity(0.45) : Color.textSecondary)
+                                                    .foregroundStyle(isDimmedNode ? nodeMutedColor.opacity(0.75) : nodeSubtitleColor)
                                                     .lineLimit(2)
                                             }
                                         }
@@ -1081,7 +1115,7 @@ struct SankeyDiagramView: View {
                                     .frame(width: node.rect.width, height: node.rect.height, alignment: .topLeading)
                                     .background(
                                         RoundedRectangle(cornerRadius: 13, style: .continuous)
-                                            .fill(Color.backgroundSecondary.opacity(isDimmedNode ? 0.5 : 1.0))
+                                            .fill(isDimmedNode ? nodeSurfaceDimmed : nodeSurface)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 13, style: .continuous)
                                                     .strokeBorder(
@@ -1108,6 +1142,7 @@ struct SankeyDiagramView: View {
                 .frame(height: 540)
             }
         }
+        .id("sankey-\(title)-\(appTheme)")
     }
 
     private func makeLayout(in size: CGSize) -> [String: SankeyLayoutNode] {
