@@ -21,6 +21,8 @@ struct SettingsView: View {
     private var launchAtLogin = MacPulseSettings.Default.launchAtLogin
     @AppStorage(MacPulseSettings.Key.privacyMode)
     private var privacyMode = MacPulseSettings.Default.privacyMode
+    @AppStorage(MacPulseSettings.Key.appTheme)
+    private var appTheme = MacPulseSettings.Default.appTheme
 
     @State private var selectedSection: SettingsSection = .general
     @State private var launchAtLoginError: String?
@@ -111,6 +113,7 @@ struct SettingsView: View {
                     switch selectedSection {
                     case .general:
                         GeneralSettingsContent(
+                            appTheme: $appTheme,
                             showMenuBarIcon: $showMenuBarIcon,
                             menuBarShowCPU: $menuBarShowCPU,
                             menuBarShowMemory: $menuBarShowMemory,
@@ -217,6 +220,7 @@ private struct SettingsSidebarItem: View {
 // MARK: - General
 
 private struct GeneralSettingsContent: View {
+    @Binding var appTheme: String
     @Binding var showMenuBarIcon: Bool
     @Binding var menuBarShowCPU: Bool
     @Binding var menuBarShowMemory: Bool
@@ -227,6 +231,10 @@ private struct GeneralSettingsContent: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
+                SettingsSection(title: "Appearance") {
+                    ThemePickerRow(selection: $appTheme)
+                }
+
                 SettingsSection(title: "Privacy") {
                     SettingsToggleRow(
                         icon: "eye.slash",
@@ -671,6 +679,61 @@ private struct SettingsToggleRow: View {
     }
 }
 
+private struct ThemePickerRow: View {
+    @Binding var selection: String
+
+    var body: some View {
+        HStack(spacing: 10) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(Color.appAccent.opacity(0.14))
+                    .frame(width: 28, height: 28)
+                Image(systemName: "paintpalette.fill")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.appAccent)
+            }
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text("App Theme")
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundStyle(.textPrimary)
+                Text("Switch between the bright and dark MacPulse design")
+                    .font(.system(size: 11))
+                    .foregroundStyle(.textTertiary)
+            }
+
+            Spacer()
+
+            HStack(spacing: 4) {
+                ForEach(MacPulseTheme.allCases) { theme in
+                    Button {
+                        selection = theme.rawValue
+                    } label: {
+                        HStack(spacing: 5) {
+                            Image(systemName: theme.icon)
+                                .font(.system(size: 10, weight: .semibold))
+                            Text(theme.title)
+                                .font(.system(size: 11, weight: .semibold))
+                        }
+                        .foregroundStyle(selection == theme.rawValue ? Color.white : Color.textSecondary)
+                        .padding(.horizontal, 9)
+                        .frame(height: 28)
+                        .background(selection == theme.rawValue ? Color.appAccent : Color.backgroundTertiary)
+                        .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
+                    }
+                    .buttonStyle(.plain)
+                    .help(theme.title)
+                }
+            }
+            .padding(3)
+            .background(Color.backgroundTertiary.opacity(0.75))
+            .clipShape(RoundedRectangle(cornerRadius: 9, style: .continuous))
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+    }
+}
+
 private struct SettingsSliderRow: View {
     let icon: String
     let color: Color
@@ -734,6 +797,8 @@ private struct SettingsMessageRow: View {
 
 // MARK: Legacy tab items (kept for macOS Settings window compatibility)
 struct GeneralSettingsTab: View {
+    @AppStorage(MacPulseSettings.Key.appTheme)
+    private var appTheme = MacPulseSettings.Default.appTheme
     @Binding var showMenuBarIcon: Bool
     @Binding var menuBarShowCPU: Bool
     @Binding var menuBarShowMemory: Bool
@@ -741,6 +806,7 @@ struct GeneralSettingsTab: View {
     @Binding var privacyMode: Bool
     var body: some View {
         GeneralSettingsContent(
+            appTheme: $appTheme,
             showMenuBarIcon: $showMenuBarIcon,
             menuBarShowCPU: $menuBarShowCPU,
             menuBarShowMemory: $menuBarShowMemory,

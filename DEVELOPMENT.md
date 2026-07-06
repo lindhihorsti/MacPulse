@@ -41,6 +41,7 @@ Aktuell genutzte UserDefaults/AppStorage Keys:
 - `alertsEnabled`
 - `cpuAlertThreshold`
 - `memoryAlertThreshold`
+- `appTheme`
 
 Die kanonischen Keys und Defaults liegen in `MacPulse/Helpers/MacPulseSettings.swift`.
 

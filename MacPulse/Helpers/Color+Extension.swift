@@ -2,14 +2,26 @@ import SwiftUI
 
 extension Color {
     // MARK: - Background Hierarchy
-    static let backgroundPrimary   = Color(hex: 0x080B12)   // Deepest — near-black with blue undertone
-    static let backgroundSecondary = Color(hex: 0x0D1321)   // Cards — dark navy
-    static let backgroundTertiary  = Color(hex: 0x141C2E)   // Elevated — deep navy
-    static let backgroundHover     = Color(hex: 0x1C2840)   // Hover/active state
+    static var backgroundPrimary: Color {
+        MacPulseTheme.current == .light ? Color(hex: 0xF5F7FB) : Color(hex: 0x080B12)
+    }
+    static var backgroundSecondary: Color {
+        MacPulseTheme.current == .light ? Color(hex: 0xFFFFFF) : Color(hex: 0x0D1321)
+    }
+    static var backgroundTertiary: Color {
+        MacPulseTheme.current == .light ? Color(hex: 0xE9EEF7) : Color(hex: 0x141C2E)
+    }
+    static var backgroundHover: Color {
+        MacPulseTheme.current == .light ? Color(hex: 0xDCE6F5) : Color(hex: 0x1C2840)
+    }
 
     // MARK: - Surface Borders
-    static let surfaceBorder       = Color.white.opacity(0.07)
-    static let surfaceBorderMedium = Color.white.opacity(0.13)
+    static var surfaceBorder: Color {
+        MacPulseTheme.current == .light ? Color.black.opacity(0.08) : Color.white.opacity(0.07)
+    }
+    static var surfaceBorderMedium: Color {
+        MacPulseTheme.current == .light ? Color.black.opacity(0.14) : Color.white.opacity(0.13)
+    }
 
     // MARK: - Accent Colors (Status-based)
     static let appAccent = Color(hex: 0x4F7AFF)   // Electric blue
@@ -25,9 +37,15 @@ extension Color {
     static let netColor  = Color(hex: 0x06B6D4)   // Cyan
 
     // MARK: - Text Colors
-    static let textPrimary   = Color.white.opacity(0.92)
-    static let textSecondary = Color.white.opacity(0.50)
-    static let textTertiary  = Color.white.opacity(0.28)
+    static var textPrimary: Color {
+        MacPulseTheme.current == .light ? Color(hex: 0x101828).opacity(0.94) : Color.white.opacity(0.92)
+    }
+    static var textSecondary: Color {
+        MacPulseTheme.current == .light ? Color(hex: 0x344054).opacity(0.72) : Color.white.opacity(0.50)
+    }
+    static var textTertiary: Color {
+        MacPulseTheme.current == .light ? Color(hex: 0x667085).opacity(0.68) : Color.white.opacity(0.28)
+    }
 
     // MARK: - Hex Initializer
     init(hex: UInt, alpha: Double = 1.0) {

@@ -12,6 +12,12 @@ struct MacPulseApp: App {
     private var showMenuBarIcon = MacPulseSettings.Default.showMenuBarIcon
     @AppStorage(MacPulseSettings.Key.refreshInterval)
     private var refreshInterval = MacPulseSettings.Default.refreshInterval
+    @AppStorage(MacPulseSettings.Key.appTheme)
+    private var appTheme = MacPulseSettings.Default.appTheme
+
+    private var preferredScheme: ColorScheme {
+        MacPulseTheme(rawValue: appTheme) == .light ? .light : .dark
+    }
 
     var body: some Scene {
         // MARK: Main Window
@@ -19,8 +25,10 @@ struct MacPulseApp: App {
             ContentView()
                 .frame(minWidth: 1020, minHeight: 720)
                 .environment(monitor)
+                .preferredColorScheme(preferredScheme)
                 .sheet(isPresented: $showOnboarding) {
                     OnboardingView(isPresented: $showOnboarding)
+                        .preferredColorScheme(preferredScheme)
                 }
                 .onAppear {
                     if let window = NSApp.mainWindow ?? NSApp.keyWindow {
@@ -47,14 +55,17 @@ struct MacPulseApp: App {
         Window("Settings", id: AppWindowID.settings) {
             SettingsView()
                 .frame(width: 560, height: 380)
+                .preferredColorScheme(preferredScheme)
         }
         .windowResizability(.contentSize)
 
         // MARK: Menu Bar
         MenuBarExtra(isInserted: $showMenuBarIcon) {
             MenuBarView(monitor: monitor) { openMainWindow() }
+                .preferredColorScheme(preferredScheme)
         } label: {
             MenuBarLabel(monitor: monitor)
+                .preferredColorScheme(preferredScheme)
         }
         .menuBarExtraStyle(.window)
     }
